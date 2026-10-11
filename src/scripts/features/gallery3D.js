@@ -1,4 +1,5 @@
-const DATA_URL = new URL('../data/photos.json', import.meta.url);
+import { getImagesByKeywords } from '../../data/localImages.js';
+
 const MAX_PHOTOS = 24;
 const THREE_CDN = 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 
@@ -27,12 +28,17 @@ export const initGallery3D = () => {
     status.textContent = 'Preparando los recuerdos…';
 
     try {
-      const [THREE, photoResponse] = await Promise.all([
-        import(/* @vite-ignore */ THREE_CDN),
-        fetch(DATA_URL),
-      ]);
-      if (!photoResponse.ok) throw new Error('No fue posible cargar el archivo de fotografías.');
-      const photos = (await photoResponse.json()).slice(0, MAX_PHOTOS);
+      const THREE = await import(/* @vite-ignore */ THREE_CDN);
+      const photos = getImagesByKeywords(
+        ['boda', 'wedding', 'pareja', 'novia', 'novio', 'elopement'],
+        MAX_PHOTOS,
+      ).map((src, index) => ({
+        src,
+        alt: `Fotografía Fine Art de boda ${index + 1}`,
+        title: `Historia ${String(index + 1).padStart(2, '0')}`,
+        location: 'Yucatán y Riviera Maya',
+      }));
+      if (!photos.length) throw new Error('No hay fotografías locales disponibles para la galería 3D.');
       experience = buildScene(THREE, photos);
       experience.start();
       status.textContent = 'Arrastra para recorrer el túnel. Selecciona una fotografía para acercarte.';

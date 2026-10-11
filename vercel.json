@@ -1,3 +1,9 @@
 {
-  "cleanUrls": true
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "functions": {
+    "api/**/*.py": {
+      "excludeFiles": "{src/img/**,public/assets/**,dist/**,node_modules/**}"
+    }
+  }
 }
