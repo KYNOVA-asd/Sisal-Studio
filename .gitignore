@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Vite build and cache
+dist/
+.vite/
+
+# Vercel local metadata
+.vercel/
+
+# Local environment variables (keep examples versioned)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Python cache and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Test and coverage output
+coverage/
+.coverage
+.pytest_cache/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

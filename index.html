@@ -55,6 +55,7 @@
       <nav class="header__nav" id="main-navigation" aria-label="Navegación principal">
         <a class="header__link" href="#galeria">Historias</a>
         <a class="header__link" href="#servicios">Servicios</a>
+        <a class="header__link" href="#calculadora-sol">Calculadora</a>
         <a class="header__link" href="#contacto">Contacto</a>
       </nav>
     </header>
@@ -134,6 +135,39 @@
             <h3 class="service-card__title">Editorial</h3>
             <p class="service-card__text">Imagen con intención para marcas, publicaciones y proyectos con sensibilidad artística.</p>
           </article>
+        </div>
+      </section>
+
+      <section class="golden-calculator" id="calculadora-sol" aria-labelledby="golden-calculator-title">
+        <div class="golden-calculator__inner">
+          <header class="golden-calculator__intro">
+            <p class="section__eyebrow">Planea alrededor de la luz</p>
+            <h2 class="golden-calculator__title" id="golden-calculator-title">La hora perfecta para decir “sí”</h2>
+            <p class="golden-calculator__description">Descubre la puesta de sol y crea un timeline fotográfico sugerido para tu boda en la Península de Yucatán.</p>
+          </header>
+
+          <form class="golden-calculator__form" data-golden-form>
+            <div class="golden-calculator__field">
+              <label class="golden-calculator__label" for="wedding-date">Fecha de la boda</label>
+              <input class="golden-calculator__input" id="wedding-date" name="date" type="date" required data-golden-date>
+            </div>
+            <div class="golden-calculator__field">
+              <label class="golden-calculator__label" for="wedding-location">Ubicación</label>
+              <select class="golden-calculator__input" id="wedding-location" name="location" required>
+                <option value="" selected disabled>Selecciona el escenario</option>
+                <option value="merida">Hacienda en Mérida</option>
+                <option value="cancun">Playa en Cancún</option>
+                <option value="tulum">Cenote / Hotel en Tulum</option>
+                <option value="playa">Riviera Maya</option>
+              </select>
+            </div>
+            <button class="button golden-calculator__submit" type="submit" data-golden-submit>
+              <span>Calcular luz de mi boda</span>
+            </button>
+          </form>
+
+          <p class="golden-calculator__status" role="status" aria-live="polite" data-golden-status></p>
+          <div class="golden-calculator__result" tabindex="-1" hidden data-golden-result></div>
         </div>
       </section>
 

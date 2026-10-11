@@ -56,7 +56,8 @@ img { display: block; max-width: 100%; }
 
 .hero { min-height: 100svh; overflow: hidden; position: relative; }
 .hero__media, .hero__image, .hero__veil { height: 100%; inset: 0; position: absolute; width: 100%; }
-.hero__image { object-fit: cover; }
+.hero__media { display: block; overflow: hidden; }
+.hero__image { object-fit: cover; object-position: center 42%; }
 .hero__veil { background: linear-gradient(90deg, rgba(17, 22, 17, .58), rgba(17, 22, 17, .10)); }
 .hero__content { color: var(--color-white); left: clamp(1.5rem, 8vw, 8rem); max-width: 760px; position: absolute; top: 54%; transform: translateY(-50%); }
 .hero__eyebrow, .section__eyebrow { font-size: .7rem; letter-spacing: .25em; margin: 0 0 1.3rem; text-transform: uppercase; }
@@ -77,10 +78,11 @@ img { display: block; max-width: 100%; }
 .section__title { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 400; line-height: 1; margin: 0; }
 
 .gallery__grid { display: grid; gap: clamp(.75rem, 2vw, 1.5rem); grid-auto-flow: dense; grid-auto-rows: 10px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-.gallery__item { grid-row: span 35; margin: 0; overflow: hidden; }
+.gallery__item { grid-row: span 35; margin: 0; min-height: 0; overflow: hidden; }
 .gallery__item--tall { grid-row: span 52; }
 .gallery__item--wide { grid-column: span 2; grid-row: span 40; }
-.gallery__item img { height: 100%; object-fit: cover; transition: transform 700ms ease; width: 100%; }
+.gallery__item picture { display: block; height: 100%; width: 100%; }
+.gallery__item img { height: 100%; max-height: 100%; object-fit: cover; object-position: center; transition: transform 700ms ease; width: 100%; }
 .gallery__item:hover img { transform: scale(1.025); }
 
 .services { border-top: 1px solid var(--color-sisal); }
@@ -99,8 +101,11 @@ img { display: block; max-width: 100%; }
   .header__nav { background: var(--color-plaster); flex-direction: column; inset: 68px 0 auto; padding: 2rem; position: fixed; transform: translateY(-150%); transition: transform var(--transition); }
   .header__nav.is-open { transform: translateY(0); }
   .hero__content { right: 1.5rem; }
+  .hero__image { object-position: 58% center; }
   .gallery__grid { grid-template-columns: 1fr; }
-  .gallery__item--wide { grid-column: span 1; }
+  .gallery__item { grid-row: span 42; }
+  .gallery__item--tall { grid-row: span 52; }
+  .gallery__item--wide { grid-column: span 1; grid-row: span 34; }
   .services__grid { grid-template-columns: 1fr; }
   .footer { align-items: center; flex-direction: column; text-align: center; }
 }

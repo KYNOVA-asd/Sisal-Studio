@@ -1,4 +1,6 @@
 import './styles/main.css';
+import './styles/_calculator.css';
+import { initGoldenHourCalculator } from './scripts/features/goldenHourCalc.js';
 
 const menuButton = document.querySelector('.header__menu');
 const navigation = document.querySelector('.header__nav');
@@ -31,6 +33,8 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 
 const yearElement = document.querySelector('[data-current-year]');
 if (yearElement) yearElement.textContent = new Date().getFullYear();
+
+initGoldenHourCalculator();
 
 /*
  * Próxima iteración: fade-in progresivo de fotografías.
