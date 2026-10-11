@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explora la colección Fine Art de Sisal Studio sobre una mesa de luz tridimensional e interactiva.">
+    <title>Mesa de Luz 3D | Sisal Studio</title>
+    <link rel="canonical" href="https://sisalstudio.mx/experiencia-3d/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mesa de Luz — Colección Fine Art | Sisal Studio">
+    <meta property="og:description" content="Una experiencia interactiva para explorar las impresiones Fine Art de Sisal Studio.">
+    <meta property="og:url" content="https://sisalstudio.mx/experiencia-3d/">
+    <meta property="og:image" content="https://sisalstudio.mx/assets/og/experiencia-3d.webp">
+  </head>
+  <body>
+    <main>
+      <section class="lightbox-3d-page" aria-labelledby="lightbox-title">
+        <canvas id="canvas-lightbox" aria-label="Mesa de luz tridimensional con fotografías interactivas"></canvas>
+        <header class="lightbox-ui__heading">
+          <p>Sisal Studio presenta</p>
+          <h1 id="lightbox-title">Mesa de Luz — Colección Fine Art</h1>
+        </header>
+        <p class="lightbox-ui__hint">Arrastra, desliza y explora las impresiones</p>
+        <a class="lightbox-ui__back" href="/bodas/">← Volver al Portafolio</a>
+        <button class="lightbox-ui__reset" type="button" data-lightbox-reset>Reiniciar Mesa</button>
+        <aside class="lightbox-ui__panel" data-lightbox-panel aria-live="polite">
+          <p>Impresión seleccionada</p>
+          <h2 data-lightbox-photo-title></h2>
+          <a href="/cotizar/">Cotizar una cobertura</a>
+        </aside>
+        <div class="lightbox-fallback">
+          <p>Esta experiencia utiliza movimiento 3D. Puedes explorar nuestro portafolio en una versión más ligera.</p>
+          <a href="/bodas/">Ver Portafolio</a>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/src/scripts/pages/experiencia3d.js"></script>
+  </body>
+</html>

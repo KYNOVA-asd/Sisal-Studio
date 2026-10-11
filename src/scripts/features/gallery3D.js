@@ -1,4 +1,5 @@
 import { getImagesByKeywords } from '../../data/localImages.js';
+import { createGallery3DLoader } from '../../components/Gallery3D.js';
 
 const MAX_PHOTOS = 24;
 const THREE_CDN = 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
@@ -15,16 +16,21 @@ export const initGallery3D = () => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let experience = null;
   let initializing = false;
+  let loader = null;
 
   const destroyExperience = () => {
     experience?.destroy();
     experience = null;
+    loader?.destroy();
+    loader = null;
     panel?.classList.remove('is-visible');
   };
 
   const createExperience = async () => {
     if (experience || initializing) return;
     initializing = true;
+    loader = createGallery3DLoader(section);
+    loader.update(0);
     status.textContent = 'Preparando los recuerdos…';
 
     try {
@@ -39,19 +45,20 @@ export const initGallery3D = () => {
         location: 'Yucatán y Riviera Maya',
       }));
       if (!photos.length) throw new Error('No hay fotografías locales disponibles para la galería 3D.');
-      experience = buildScene(THREE, photos);
-      experience.start();
-      status.textContent = 'Arrastra para recorrer el túnel. Selecciona una fotografía para acercarte.';
+      experience = buildScene(THREE, photos, loader);
+      status.textContent = 'Cargando fotografías…';
     } catch (error) {
       status.textContent = 'La galería 3D no está disponible en este dispositivo.';
       section.classList.add('webgl-gallery--fallback');
+      loader?.destroy();
+      loader = null;
       console.error(error);
     } finally {
       initializing = false;
     }
   };
 
-  const buildScene = (THREE, photos) => {
+  const buildScene = (THREE, photos, loadingOverlay) => {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x121212);
     scene.fog = new THREE.FogExp2(0x121212, 0.026);
@@ -63,7 +70,7 @@ export const initGallery3D = () => {
     const lookAtTarget = cameraLookAt.clone();
 
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -76,7 +83,8 @@ export const initGallery3D = () => {
 
     const constellation = new THREE.Group();
     scene.add(constellation);
-    const textureLoader = new THREE.TextureLoader();
+    const loadingManager = new THREE.LoadingManager();
+    const textureLoader = new THREE.TextureLoader(loadingManager);
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2(4, 4);
     const meshes = [];
@@ -87,6 +95,22 @@ export const initGallery3D = () => {
     let previousPointer = { x: 0, y: 0 };
     let autoRotate = false;
     let selectedMesh = null;
+    let alive = true;
+
+    loadingManager.onProgress = (_url, loaded, total) => {
+      if (alive && total > 0) loadingOverlay?.update((loaded / total) * 100);
+    };
+
+    loadingManager.onLoad = () => {
+      if (!alive) return;
+      loadingOverlay?.complete();
+      loader = null;
+      status.textContent = 'Arrastra para recorrer el túnel. Selecciona una fotografía para acercarte.';
+      if (!running) {
+        running = true;
+        animate();
+      }
+    };
 
     const paperGeometry = new THREE.PlaneGeometry(3.12, 4.02);
     const photoGeometry = new THREE.PlaneGeometry(2.82, 3.62);
@@ -242,6 +266,7 @@ export const initGallery3D = () => {
     return {
       start() { if (!running) { running = true; animate(); } },
       destroy() {
+        alive = false;
         running = false;
         cancelAnimationFrame(animationFrame);
         window.removeEventListener('resize', resize);
@@ -269,7 +294,7 @@ export const initGallery3D = () => {
   const observer = new IntersectionObserver(([entry]) => {
     if (entry.isIntersecting) createExperience();
     else destroyExperience();
-  }, { rootMargin: '200px 0px', threshold: 0.01 });
+  }, { rootMargin: '0px', threshold: 0.01 });
 
   observer.observe(section);
 };
