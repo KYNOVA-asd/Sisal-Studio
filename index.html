@@ -54,6 +54,7 @@
       <button class="header__menu" type="button" aria-expanded="false" aria-controls="main-navigation">Menú</button>
       <nav class="header__nav" id="main-navigation" aria-label="Navegación principal">
         <a class="header__link" href="#galeria">Historias</a>
+        <a class="header__link" href="#portafolio">Portafolio</a>
         <a class="header__link" href="#servicios">Servicios</a>
         <a class="header__link" href="#calculadora-sol">Calculadora</a>
         <a class="header__link" href="#contacto">Contacto</a>
@@ -112,6 +113,82 @@
             </picture>
           </figure>
         </div>
+      </section>
+
+      <section class="portfolio section" id="portafolio" aria-labelledby="portfolio-title">
+        <header class="portfolio__header">
+          <div>
+            <p class="section__eyebrow">Portafolio</p>
+            <h2 class="section__title" id="portfolio-title">Relatos en luz natural</h2>
+          </div>
+          <div class="portfolio__controls" aria-label="Controles del portafolio">
+            <button class="portfolio__control" type="button" aria-label="Ver fotografía anterior" data-portfolio-previous>←</button>
+            <button class="portfolio__control" type="button" aria-label="Ver fotografía siguiente" data-portfolio-next>→</button>
+          </div>
+        </header>
+
+        <div class="portfolio__feed" data-portfolio-feed tabindex="0" aria-label="Portafolio fotográfico deslizable">
+          <article class="portfolio-card is-loading">
+            <header class="portfolio-card__header">
+              <span class="portfolio-card__avatar" aria-hidden="true">S</span>
+              <div><h3 class="portfolio-card__name">Sisal Studio</h3><p class="portfolio-card__place">Mérida, Yucatán</p></div>
+            </header>
+            <figure class="portfolio-card__media">
+              <span class="portfolio-card__skeleton" aria-hidden="true"></span>
+              <picture>
+                <source type="image/webp" srcset="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&fm=webp&w=900&q=82">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&fm=jpg&w=900&q=82" alt="Ceremonia de boda al aire libre" width="900" height="1125" loading="lazy" decoding="async">
+              </picture>
+            </figure>
+            <footer class="portfolio-card__caption"><span>01</span><p>Votos bajo la luz del Mayab.</p></footer>
+          </article>
+
+          <article class="portfolio-card is-loading">
+            <header class="portfolio-card__header">
+              <span class="portfolio-card__avatar" aria-hidden="true">S</span>
+              <div><h3 class="portfolio-card__name">Sisal Studio</h3><p class="portfolio-card__place">Riviera Maya</p></div>
+            </header>
+            <figure class="portfolio-card__media">
+              <span class="portfolio-card__skeleton" aria-hidden="true"></span>
+              <picture>
+                <source type="image/webp" srcset="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&fm=webp&w=900&q=82">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&fm=jpg&w=900&q=82" alt="Pareja de recién casados caminando" width="900" height="1125" loading="lazy" decoding="async">
+              </picture>
+            </figure>
+            <footer class="portfolio-card__caption"><span>02</span><p>Un instante lejos del ruido.</p></footer>
+          </article>
+
+          <article class="portfolio-card is-loading">
+            <header class="portfolio-card__header">
+              <span class="portfolio-card__avatar" aria-hidden="true">S</span>
+              <div><h3 class="portfolio-card__name">Sisal Studio</h3><p class="portfolio-card__place">Tulum, Quintana Roo</p></div>
+            </header>
+            <figure class="portfolio-card__media">
+              <span class="portfolio-card__skeleton" aria-hidden="true"></span>
+              <picture>
+                <source type="image/webp" srcset="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&fm=webp&w=900&q=82">
+                <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&fm=jpg&w=900&q=82" alt="Manos de una pareja mostrando sus anillos" width="900" height="1125" loading="lazy" decoding="async">
+              </picture>
+            </figure>
+            <footer class="portfolio-card__caption"><span>03</span><p>Los detalles que cuentan la historia.</p></footer>
+          </article>
+
+          <article class="portfolio-card is-loading">
+            <header class="portfolio-card__header">
+              <span class="portfolio-card__avatar" aria-hidden="true">S</span>
+              <div><h3 class="portfolio-card__name">Sisal Studio</h3><p class="portfolio-card__place">Cancún, Quintana Roo</p></div>
+            </header>
+            <figure class="portfolio-card__media">
+              <span class="portfolio-card__skeleton" aria-hidden="true"></span>
+              <picture>
+                <source type="image/webp" srcset="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&fm=webp&w=900&q=82">
+                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&fm=jpg&w=900&q=82" alt="Retrato de pareja durante su boda" width="900" height="1125" loading="lazy" decoding="async">
+              </picture>
+            </figure>
+            <footer class="portfolio-card__caption"><span>04</span><p>Retratos honestos, sin poses forzadas.</p></footer>
+          </article>
+        </div>
+        <p class="portfolio__hint" aria-hidden="true">Desliza para explorar <span>→</span></p>
       </section>
 
       <section class="services section" id="servicios" aria-labelledby="services-title">

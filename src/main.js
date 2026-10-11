@@ -36,6 +36,30 @@ if (yearElement) yearElement.textContent = new Date().getFullYear();
 
 initGoldenHourCalculator();
 
+const portfolioFeed = document.querySelector('[data-portfolio-feed]');
+const portfolioPrevious = document.querySelector('[data-portfolio-previous]');
+const portfolioNext = document.querySelector('[data-portfolio-next]');
+
+const movePortfolio = (direction) => {
+  if (!portfolioFeed) return;
+  const card = portfolioFeed.querySelector('.portfolio-card');
+  const gap = Number.parseFloat(getComputedStyle(portfolioFeed).columnGap) || 0;
+  const distance = (card?.getBoundingClientRect().width || 320) + gap;
+  portfolioFeed.scrollBy({ left: distance * direction, behavior: 'smooth' });
+};
+
+portfolioPrevious?.addEventListener('click', () => movePortfolio(-1));
+portfolioNext?.addEventListener('click', () => movePortfolio(1));
+
+document.querySelectorAll('.portfolio-card__media img').forEach((image) => {
+  const revealImage = () => image.closest('.portfolio-card')?.classList.remove('is-loading');
+  if (image.complete) revealImage();
+  else {
+    image.addEventListener('load', revealImage, { once: true });
+    image.addEventListener('error', revealImage, { once: true });
+  }
+});
+
 /*
  * Próxima iteración: fade-in progresivo de fotografías.
  *
