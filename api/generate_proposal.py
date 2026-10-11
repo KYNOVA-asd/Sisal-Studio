@@ -1,7 +1,32 @@
 import json
+import os
+import re
+import secrets
+import time
+import unicodedata
+from datetime import datetime
 from io import BytesIO
 from http.server import BaseHTTPRequestHandler
 from fpdf import FPDF
+from zoneinfo import ZoneInfo
+
+
+def verify_demo_captcha(challenge, signature, answer):
+    # CAPTCHA visual de demostración. El honeypot del formulario conserva una
+    # barrera básica contra envíos automáticos sin depender de servicios externos.
+    return str(answer or "").lower() == "yes"
+
+
+def generate_client_id(name):
+    normalized = unicodedata.normalize("NFKD", str(name)).encode("ascii", "ignore").decode()
+    name_code = re.sub(r"[^A-Z0-9]+", "-", normalized.upper()).strip("-")[:18] or "CLIENTE"
+    suffix = "".join(secrets.choice("ABCDEFGHJKLMNPQRSTUVWXYZ23456789") for _ in range(4))
+    day = datetime.now(ZoneInfo("America/Cancun")).strftime("%Y%m%d")
+    return f"SIS-{day}-{name_code}-{suffix}"
+
+
+def generated_at():
+    return datetime.now(ZoneInfo("America/Cancun")).strftime("%d/%m/%Y %I:%M %p")
 
 PACKAGES = {
     "esencial": {"name": "Colección Esencial", "hours": "6 horas", "price": "$38,000 MXN", "items": ["Cobertura documental", "Galería digital privada", "300+ fotografías editadas"]},
@@ -30,6 +55,12 @@ def create_pdf(data):
     pdf.set_font("Helvetica", "", 10)
     pdf.set_text_color(74, 83, 70)
     pdf.cell(0, 7, f'{data["fecha_boda"]}  |  {data["venue"]}')
+    pdf.ln(7)
+    pdf.set_font("Helvetica", "B", 8)
+    pdf.cell(0, 6, "REFERENCIA: " + data["client_id"])
+    pdf.ln(6)
+    pdf.set_font("Helvetica", "", 8)
+    pdf.cell(0, 6, "GENERADO EL: " + data["generated_at"] + " (CANCUN)")
     pdf.ln(24)
     pdf.set_draw_color(212, 197, 185)
     pdf.line(18, pdf.get_y(), 192, pdf.get_y())
@@ -73,16 +104,28 @@ class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             length = int(self.headers.get("Content-Length", "0"))
+            if length <= 0 or length > 20_000:
+                raise ValueError("La solicitud no es válida.")
             data = json.loads(self.rfile.read(length))
+            if str(data.get("website", "")).strip():
+                raise ValueError("La solicitud fue rechazada.")
+            if not verify_demo_captcha(data.get("captcha_challenge"), data.get("captcha_signature"), data.get("captcha_answer")):
+                raise ValueError("La verificación humana no es válida o expiró. Recarga e inténtalo nuevamente.")
             required = ["cliente_nombre", "fecha_boda", "venue", "paquete_id", "email", "whatsapp"]
             if any(not str(data.get(field, "")).strip() for field in required):
                 raise ValueError("Todos los campos son obligatorios.")
+            limits = {"cliente_nombre": 100, "fecha_boda": 10, "venue": 140, "email": 160, "whatsapp": 32, "paquete_id": 24}
+            if any(len(str(data.get(field, ""))) > maximum for field, maximum in limits.items()):
+                raise ValueError("Uno de los campos supera la longitud permitida.")
             if data["paquete_id"] not in PACKAGES:
                 raise ValueError("El paquete seleccionado no existe.")
+            data["client_id"] = generate_client_id(data["cliente_nombre"])
+            data["generated_at"] = generated_at()
             content = create_pdf(data)
-            filename = "propuesta-sisal-studio.pdf"
+            filename = f'propuesta-{data["client_id"].lower()}.pdf'
             self.send_response(200); self.send_header("Content-Type", "application/pdf")
             self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
+            self.send_header("X-Sisal-Client-Id", data["client_id"])
             self.send_header("Content-Length", str(len(content))); self._cors(); self.end_headers(); self.wfile.write(content)
         except (ValueError, KeyError, json.JSONDecodeError) as error:
             payload = json.dumps({"error": str(error)}).encode()

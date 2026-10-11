@@ -7,6 +7,8 @@
 
 .experience-directory__featured span { color: var(--color-henequen); }
 
+.depth-showcase .depth-effect__ring-mount { display: none; }
+
 @media (max-width: 850px) {
   .experience-directory__grid .experience-directory__featured { min-height: 280px; }
 }

@@ -2,6 +2,7 @@ import '../../styles/global.css';
 import '../../styles/experiences.css';
 import '../../styles/experiences-overrides.css';
 import '../../styles/depth-hero.css';
+import '../../styles/depth-hero-accessibility.css';
 import { initGlobalLayout } from '../global.js';
 import { createDepthHero } from '../../components/DepthHero.js';
 import { getImagesByKeywords } from '../../data/localImages.js';

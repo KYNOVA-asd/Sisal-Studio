@@ -1,9 +1,6 @@
 import '../../styles/global.css'; import '../../styles/pages.css'; import { initGlobalLayout } from '../global.js';
+import '../../styles/immersive-invitation.css';
 import { getImagesByKeywords } from '../../data/localImages.js';
-import { initGallery3D } from '../features/gallery3D.js';
-import '../../styles/gallery3d.css';
-import '../../styles/auto-experience.css';
-import { initAutoExperience } from '../../components/AutoExperience.js';
 initGlobalLayout();
 const weddingImages=getImagesByKeywords(['boda','wedding','pareja','novia','novio','elopement'],8);
 const hero=document.querySelector('.page-hero--weddings');if(hero&&weddingImages[0])hero.style.setProperty('--page-hero-image',`url("${weddingImages[0]}")`);
@@ -29,9 +26,7 @@ gallery3D.innerHTML = `
     <button type="button" data-webgl-rotate>Rotar</button>
     <button type="button" data-webgl-reset>Reiniciar</button>
   </div>`;
+gallery3D.className = 'immersive-invitation';
+gallery3D.removeAttribute('id');
+gallery3D.innerHTML = `<p class="eyebrow">Experiencia inmersiva</p><h2>Entra al Túnel de Recuerdos</h2><p>Abre la experiencia a pantalla completa para explorar sin conflictos con el scroll.</p><a class="button" href="/tunel-3d/">Abrir Túnel 3D</a>`;
 document.querySelector('.page-cta')?.before(gallery3D);
-initGallery3D();
-initAutoExperience({ target: gallery3D, type: 'tunnel' });
-if (window.location.hash === '#galeria-3d') {
-  requestAnimationFrame(() => gallery3D.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-}

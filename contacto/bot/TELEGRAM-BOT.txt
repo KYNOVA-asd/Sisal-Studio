@@ -1,0 +1,174 @@
+SISAL STUDIO - BOT DE TELEGRAM
+==============================
+
+Objetivo
+--------
+Usar @leadsbeachangel_bot como canal privado de notificaciones para Sisal
+Studio. El bot puede avisar cuando llega una cotizacion, cuando una pareja usa
+la calculadora solar o cuando se genera una propuesta PDF.
+
+
+1. DATOS LOCALES
+----------------
+
+Los valores reales se guardan en el archivo privado de la raiz:
+
+  .env.local
+
+Variables requeridas:
+
+  TELEGRAM_BOT_TOKEN=TOKEN_GENERADO_POR_BOTFATHER
+  TELEGRAM_CHAT_ID=ID_DE_LA_CONVERSACION_PRIVADA
+
+Nunca usar el prefijo VITE_ en el token. Toda variable VITE_* puede terminar
+incluida en el JavaScript que recibe el navegador.
+
+.env.local esta excluido mediante .gitignore. No subirlo a GitHub, copiarlo a
+archivos HTML ni pegarlo dentro de funciones JavaScript del frontend.
+
+
+2. DIFERENCIA ENTRE BOTFATHER Y EL BOT
+--------------------------------------
+
+@BotFather:
+  - Crea y administra el bot.
+  - Genera o revoca el token.
+  - Configura nombre, descripcion, comandos y fotografia.
+
+@leadsbeachangel_bot:
+  - Es el bot operativo de Sisal Studio.
+  - Recibe /start y mensajes.
+  - Enviara las notificaciones del sitio.
+
+
+3. COMO SE OBTUVO EL CHAT ID
+----------------------------
+
+1. Se envio /start y despues "Hola" a @leadsbeachangel_bot.
+2. Desde el equipo local se consulto el metodo getUpdates de Telegram.
+3. Se leyo message.chat.id de la conversacion privada.
+4. El valor se guardo en TELEGRAM_CHAT_ID dentro de .env.local.
+
+El Chat ID identifica el destino. El token autoriza al bot. Ambos son
+necesarios para enviar un mensaje.
+
+
+4. PRUEBA REALIZADA
+-------------------
+
+Se llamo al metodo sendMessage con una peticion POST y Telegram confirmo el
+envio. El mensaje de conexion llego correctamente a la conversacion privada.
+
+Formato conceptual de la peticion:
+
+  POST https://api.telegram.org/bot<TOKEN>/sendMessage
+
+  {
+    "chat_id": "<CHAT_ID>",
+    "text": "Sisal Studio conectado correctamente"
+  }
+
+Los marcadores <TOKEN> y <CHAT_ID> son solamente explicativos. Nunca deben
+reemplazarse con valores reales dentro de este documento.
+
+
+5. CONFIGURACION EN VERCEL
+--------------------------
+
+En el panel del proyecto:
+
+  Settings -> Environment Variables
+
+Crear:
+
+  TELEGRAM_BOT_TOKEN
+  TELEGRAM_CHAT_ID
+
+Activarlas para Production, Preview y Development y realizar un deployment
+nuevo. Las variables locales no se copian automaticamente a Vercel.
+
+
+6. ARQUITECTURA PROPUESTA
+-------------------------
+
+Crear una funcion serverless privada:
+
+  api/notify_telegram.py
+
+Responsabilidades:
+
+  - Aceptar solamente POST.
+  - Leer token y Chat ID mediante os.environ.
+  - Validar y limitar longitud de todos los campos.
+  - Rechazar origenes o solicitudes no permitidas.
+  - Incorporar proteccion anti-spam y honeypot.
+  - Escapar contenido antes de usar HTML o Markdown de Telegram.
+  - Enviar el mensaje mediante sendMessage.
+  - Nunca devolver el token en errores o respuestas.
+
+Flujo:
+
+  Formulario web
+       -> POST /api/notify_telegram
+       -> validacion serverless
+       -> Telegram Bot API
+       -> conversacion privada de Sisal Studio
+
+
+7. FORMATO PROPUESTO PARA COTIZACIONES
+--------------------------------------
+
+  NUEVA SOLICITUD - SISAL STUDIO
+
+  Cliente: Maria Lopez
+  Fecha: 15 de marzo de 2027
+  Locacion: Tulum
+  Paquete: Coleccion Editorial
+  WhatsApp: 998 000 0000
+  Correo: cliente@example.com
+
+  Origen: Calculadora / Cotizacion / Contacto
+
+El mensaje puede incluir botones para abrir WhatsApp, revisar la fecha o
+consultar la propuesta correspondiente.
+
+
+8. POSIBLES AUTOMATIZACIONES
+----------------------------
+
+  - Aviso inmediato por nueva cotizacion.
+  - Resumen de la calculadora de hora dorada.
+  - Confirmacion de PDF generado.
+  - Alerta cuando una fecha tenga varias consultas.
+  - Seguimiento interno de prospectos sin respuesta.
+  - Comando /pendientes para revisar solicitudes abiertas.
+  - Comando /hoy para mostrar sesiones o bodas del dia.
+
+
+9. SEGURIDAD
+------------
+
+Si un token aparece en un chat, captura, repositorio o pagina publica:
+
+  1. Abrir @BotFather.
+  2. Usar /revoke para invalidarlo.
+  3. Generar un token nuevo con /token.
+  4. Actualizar .env.local y las variables de Vercel.
+  5. Volver a desplegar.
+
+El token no debe enviarse desde el frontend. Toda llamada autenticada a la API
+de Telegram debe ocurrir dentro de una funcion serverless o servidor confiable.
+
+
+10. ESTADO ACTUAL
+-----------------
+
+  [OK] Bot creado.
+  [OK] Token nuevo guardado localmente.
+  [OK] Chat ID privado identificado y guardado.
+  [OK] Mensaje de prueba enviado correctamente.
+  [PENDIENTE] Crear api/notify_telegram.py.
+  [PENDIENTE] Conectar formulario de cotizacion.
+  [PENDIENTE] Agregar variables al panel de Vercel.
+  [PENDIENTE] Implementar proteccion anti-spam.
+

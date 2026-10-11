@@ -10,9 +10,16 @@ dist/
 
 # Local environment variables (keep examples versioned)
 .env
+.env.*
 .env.local
 .env.*.local
 !.env.example
+
+# Local secrets and credentials
+*.pem
+*.key
+*.secret
+secrets/
 
 # Python cache and local environments
 __pycache__/
@@ -39,3 +46,4 @@ Thumbs.db
 .vscode/
 *.swp
 ARQUITECTURA-SISAL-STUDIO.txt
+/output/pdf

@@ -14,6 +14,7 @@ export default defineConfig({
         blog: resolve(import.meta.dirname, 'blog/index.html'),
         contacto: resolve(import.meta.dirname, 'contacto/index.html'),
         experiencia3d: resolve(import.meta.dirname, 'experiencia-3d/index.html'),
+        tunel3d: resolve(import.meta.dirname, 'tunel-3d/index.html'),
         galeriaEditorial: resolve(import.meta.dirname, 'galeria-editorial/index.html'),
         espiral3d: resolve(import.meta.dirname, 'espiral-3d/index.html'),
         museo3d: resolve(import.meta.dirname, 'museo-3d/index.html'),

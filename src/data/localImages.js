@@ -8,6 +8,7 @@ const imageModules = import.meta.glob([
 });
 
 const discoveredEntries = Object.entries(imageModules)
+  .filter(([path]) => !path.toLowerCase().includes('/img/contact/'))
   .map(([path, url]) => ({ path: path.toLowerCase(), url }));
 const webpStems = new Set(
   discoveredEntries

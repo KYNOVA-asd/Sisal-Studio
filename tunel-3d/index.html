@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Explora el Túnel de Recuerdos 3D de Sisal Studio, una constelación interactiva de fotografía Fine Art.">
+  <title>Túnel de Recuerdos 3D | Sisal Studio</title>
+  <link rel="canonical" href="https://sisalstudio.mx/tunel-3d/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Túnel de Recuerdos 3D | Sisal Studio">
+  <meta property="og:description" content="Navega entre recuerdos y fotografías Fine Art en una experiencia tridimensional.">
+  <meta property="og:url" content="https://sisalstudio.mx/tunel-3d/">
+</head>
+<body>
+  <main class="tunnel-shell">
+    <section id="galeria-3d" class="webgl-gallery tunnel-page" aria-labelledby="gallery-3d-title">
+      <canvas class="webgl-gallery__canvas" id="canvas-3d" aria-label="Túnel tridimensional de fotografías Fine Art"></canvas>
+      <a class="tunnel-page__back" href="/experiencias/">← Volver a Experiencias</a>
+      <header class="webgl-gallery__heading">
+        <p class="eyebrow eyebrow--light">Experiencia inmersiva</p>
+        <h1 id="gallery-3d-title">Túnel de Recuerdos 3D</h1>
+      </header>
+      <p class="webgl-gallery__status" data-webgl-status aria-live="polite">Preparando el túnel…</p>
+      <aside class="webgl-gallery__panel" data-webgl-panel aria-live="polite">
+        <p data-webgl-location></p><h2 data-webgl-title></h2>
+        <a href="/cotizar/">Cotizar una cobertura</a>
+      </aside>
+      <div class="webgl-gallery__controls" aria-label="Controles del túnel">
+        <button type="button" data-webgl-zoom-in>Zoom +</button>
+        <button type="button" data-webgl-zoom-out>Zoom −</button>
+        <button type="button" data-webgl-rotate>Rotar</button>
+        <button type="button" data-webgl-reset>Reiniciar</button>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/src/scripts/pages/tunel3d.js"></script>
+</body>
+</html>

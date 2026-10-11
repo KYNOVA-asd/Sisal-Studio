@@ -1,0 +1,6 @@
+@media (prefers-reduced-motion: reduce) {
+  .depth-effect__ring span { display: block; }
+  .depth-effect__ring { animation: none; }
+  .depth-effect:hover .depth-effect__ring,
+  .depth-effect:focus-within .depth-effect__ring { animation: depth-orbit 18s linear infinite; }
+}
