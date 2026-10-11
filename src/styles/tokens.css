@@ -1,0 +1,22 @@
+:root {
+  --color-cream: #faf9f6;
+  --color-charcoal: #2c2c2c;
+  --color-henequen: #d4c5b9;
+  --color-olive: #4a5346;
+  --color-white: #ffffff;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Montserrat', Arial, sans-serif;
+  --container: 1240px;
+  --section-space: clamp(5rem, 10vw, 9rem);
+  --page-gutter: clamp(1.25rem, 4vw, 3rem);
+  --transition-fast: 220ms ease;
+
+  /* Alias temporales para componentes creados en iteraciones anteriores. */
+  --plaster: var(--color-cream);
+  --charcoal: var(--color-charcoal);
+  --sisal: var(--color-henequen);
+  --olive: var(--color-olive);
+  --display: var(--font-display);
+  --body: var(--font-body);
+  --space-section: var(--section-space);
+}

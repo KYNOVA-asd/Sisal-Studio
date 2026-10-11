@@ -1,6 +1,7 @@
 const links = [
   ['/', 'Inicio'], ['/bodas/', 'Bodas'], ['/eventos/', 'XV Años & Eventos'],
   ['/locaciones/', 'Locaciones'], ['/cotizar/', 'Cotizar'],
+  ['/blog/', 'Blog'],
 ];
 
 const normalize = (path) => path === '/' ? '/' : `/${path.split('/').filter(Boolean)[0]}/`;

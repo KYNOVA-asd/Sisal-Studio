@@ -11,6 +11,7 @@ export default defineConfig({
         locaciones: resolve(__dirname, 'locaciones/index.html'),
         cotizar: resolve(__dirname, 'cotizar/index.html'),
         boda: resolve(__dirname, 'boda/index.html'),
+        blog: resolve(__dirname, 'blog/index.html'),
       },
     },
   },

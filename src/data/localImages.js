@@ -1,8 +1,6 @@
 const imageModules = import.meta.glob([
   '/src/img/**/*.{avif,gif,jfif,jpeg,jpg,png,webp}',
   '/src/img/**/*.{AVIF,GIF,JFIF,JPEG,JPG,PNG,WEBP}',
-  '/src/img/*.{avif,gif,jfif,jpeg,jpg,png,webp}',
-  '/src/img/*.{AVIF,GIF,JFIF,JPEG,JPG,PNG,WEBP}',
 ], {
   eager: true,
   query: '?url',

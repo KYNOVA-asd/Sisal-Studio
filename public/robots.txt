@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /boda/
+
+Sitemap: https://sisalstudio.mx/sitemap.xml
