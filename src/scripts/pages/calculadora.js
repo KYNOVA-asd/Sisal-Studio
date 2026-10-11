@@ -1,0 +1,1 @@
+import '../../styles/global.css'; import '../../styles/_calculator.css'; import { initGlobalLayout } from '../global.js'; import { initGoldenHourCalculator } from '../features/goldenHourCalc.js'; initGlobalLayout(); initGoldenHourCalculator();

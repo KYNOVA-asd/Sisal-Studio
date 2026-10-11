@@ -1,0 +1,3 @@
+import '../../styles/global.css'; import '../../styles/pages.css'; import { initGlobalLayout } from '../global.js'; import { getImagesByKeywords } from '../../data/localImages.js';
+initGlobalLayout();
+const images=getImagesByKeywords(['xv','quince','evento','bautizo','aniversario','fiesta'],8);const hero=document.querySelector('.page-hero--events');if(hero&&images[0])hero.style.setProperty('--page-hero-image',`url("${images[0]}")`);const gallery=document.querySelector('[data-events-gallery]');gallery.innerHTML=images.slice(1,7).map((src,index)=>`<figure${index%3===1?' class="editorial-grid__feature"':''}><img src="${src}" alt="Celebración editorial fotografiada por Sisal Studio" loading="lazy"></figure>`).join('');

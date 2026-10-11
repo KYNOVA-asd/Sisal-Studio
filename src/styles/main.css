@@ -27,6 +27,7 @@ body {
   font-size: 1rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 body.menu-open { overflow: hidden; }
@@ -85,12 +86,12 @@ img { display: block; max-width: 100%; }
 .gallery__item img { height: 100%; max-height: 100%; object-fit: cover; object-position: center; transition: transform 700ms ease; width: 100%; }
 .gallery__item:hover img { transform: scale(1.025); }
 
-.portfolio { max-width: none; overflow: hidden; padding-inline: 0; }
+.portfolio { max-width: none; overflow: hidden; padding-inline: 0; width: 100%; }
 .portfolio__header { align-items: end; display: flex; justify-content: space-between; margin: 0 auto clamp(2.5rem, 5vw, 4.5rem); max-width: var(--container); padding-inline: clamp(1.25rem, 4vw, 3rem); }
 .portfolio__controls { display: flex; gap: .5rem; }
 .portfolio__control { align-items: center; background: transparent; border: 1px solid var(--color-sisal); border-radius: 50%; color: var(--color-charcoal); cursor: pointer; display: inline-flex; font-size: 1.1rem; height: 46px; justify-content: center; transition: background var(--transition), color var(--transition); width: 46px; }
 .portfolio__control:hover { background: var(--color-olive); color: var(--color-white); }
-.portfolio__feed { display: grid; gap: clamp(1rem, 2vw, 1.5rem); grid-auto-columns: minmax(290px, 390px); grid-auto-flow: column; overflow-x: auto; overscroll-behavior-inline: contain; padding: 0 max(clamp(1.25rem, 4vw, 3rem), calc((100vw - var(--container)) / 2 + 3rem)) 1.5rem; scroll-padding-inline: clamp(1.25rem, 4vw, 3rem); scroll-snap-type: inline mandatory; scrollbar-color: var(--color-olive) transparent; scrollbar-width: thin; }
+.portfolio__feed { display: grid; gap: clamp(1rem, 2vw, 1.5rem); grid-auto-columns: minmax(290px, 390px); grid-auto-flow: column; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; padding: 0 clamp(1.25rem, 5vw, 5rem) 1.5rem; scroll-padding-inline: clamp(1.25rem, 5vw, 5rem); scroll-snap-type: inline mandatory; scrollbar-color: var(--color-olive) transparent; scrollbar-width: thin; }
 .portfolio__feed:focus-visible { outline: 2px solid var(--color-olive); outline-offset: -2px; }
 .portfolio-card { background: var(--color-white); border: 1px solid rgba(212, 197, 185, .65); scroll-snap-align: start; }
 .portfolio-card__header { align-items: center; display: flex; gap: .75rem; min-height: 70px; padding: .85rem 1rem; }
@@ -111,6 +112,31 @@ img { display: block; max-width: 100%; }
 .portfolio__hint span { font-size: 1rem; margin-left: .5rem; }
 
 @keyframes portfolio-shimmer { to { background-position-x: -200%; } }
+
+.webgl-gallery { background: var(--color-plaster); color: var(--color-plaster); contain: layout paint; height: 100svh; isolation: isolate; min-height: 640px; overflow: hidden; padding: clamp(.75rem, 2vw, 1.5rem); position: relative; width: 100%; }
+.webgl-gallery::before { border: 1px solid rgba(212, 197, 185, .28); content: ''; inset: clamp(.75rem, 2vw, 1.5rem); pointer-events: none; position: absolute; z-index: 2; }
+.webgl-gallery__canvas { background: #121212; display: block; height: calc(100% - clamp(1.5rem, 4vw, 3rem)); inset: clamp(.75rem, 2vw, 1.5rem); position: absolute; touch-action: none; width: calc(100% - clamp(1.5rem, 4vw, 3rem)); }
+.webgl-gallery__heading { left: clamp(2rem, 7vw, 7rem); max-width: min(720px, calc(100% - 4rem)); pointer-events: none; position: absolute; top: clamp(5.5rem, 10vw, 8rem); z-index: 3; }
+.webgl-gallery__eyebrow { color: var(--color-sisal); font-size: .65rem; letter-spacing: .22em; margin: 0 0 .8rem; text-transform: uppercase; }
+.webgl-gallery__title { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 400; line-height: .9; margin: 0; }
+.webgl-gallery__status { bottom: clamp(6.3rem, 11vw, 8rem); color: rgba(250, 249, 246, .58); font-size: .62rem; left: 50%; letter-spacing: .08em; margin: 0; position: absolute; text-align: center; transform: translateX(-50%); width: min(calc(100% - 4rem), 560px); z-index: 3; }
+.webgl-gallery__controls { backdrop-filter: blur(14px); background: rgba(250, 249, 246, .1); border: 1px solid rgba(212, 197, 185, .32); bottom: clamp(1.25rem, 3vw, 2.5rem); display: flex; left: 50%; padding: .35rem; position: absolute; transform: translateX(-50%); z-index: 3; }
+.webgl-gallery__controls button { background: transparent; border: 0; color: var(--color-plaster); cursor: pointer; font: inherit; font-size: .6rem; letter-spacing: .1em; min-height: 42px; padding: .65rem .9rem; text-transform: uppercase; transition: background var(--transition), color var(--transition); }
+.webgl-gallery__controls button:hover, .webgl-gallery__controls button:focus-visible { background: var(--color-sisal); color: var(--color-charcoal); }
+.webgl-gallery__panel { background: rgba(18, 18, 18, .72); border-left: 1px solid rgba(212, 197, 185, .5); opacity: 0; padding: clamp(1.5rem, 3vw, 2.5rem); pointer-events: none; position: absolute; right: clamp(2rem, 7vw, 7rem); top: 50%; transform: translate(1rem, -50%); transition: opacity var(--transition), transform var(--transition); width: min(330px, calc(100% - 4rem)); z-index: 3; backdrop-filter: blur(18px); }
+.webgl-gallery__panel.is-visible { opacity: 1; pointer-events: auto; transform: translate(0, -50%); }
+.webgl-gallery__panel-label { color: var(--color-sisal); font-size: .6rem; letter-spacing: .16em; margin: 0 0 1rem; text-transform: uppercase; }
+.webgl-gallery__panel-title { font-family: var(--font-display); font-size: 2rem; font-weight: 400; line-height: 1; margin: 0; }
+.webgl-gallery__panel-location { font-size: .72rem; margin: .75rem 0 1.5rem; }
+.webgl-gallery__panel-link { border-bottom: 1px solid var(--color-sisal); font-size: .65rem; letter-spacing: .14em; padding-bottom: .35rem; text-decoration: none; text-transform: uppercase; }
+.webgl-gallery--fallback::after { align-items: center; background: linear-gradient(135deg, #1f211e, #121212); color: var(--color-sisal); content: 'Tu navegador no pudo iniciar la experiencia 3D.'; display: flex; font-family: var(--font-display); font-size: 1.5rem; inset: 0; justify-content: center; padding: 2rem; position: absolute; text-align: center; }
+
+@media (max-width: 720px) {
+  .webgl-gallery__heading { left: 2rem; }
+  .webgl-gallery__panel { left: 2rem; right: auto; top: 53%; width: calc(100% - 4rem); }
+  .webgl-gallery__controls { width: calc(100% - 4rem); }
+  .webgl-gallery__controls button { flex: 1; padding-inline: .3rem; }
+}
 
 .services { border-top: 1px solid var(--color-sisal); }
 .services__grid { display: grid; gap: 1px; grid-template-columns: repeat(3, 1fr); background: var(--color-sisal); }

@@ -48,13 +48,15 @@
       }
     </script>
   </head>
-  <body>
+  <body class="home-page">
+    <div data-site-header></div>
     <header class="header">
       <a class="header__logo" href="#inicio" aria-label="Sisal Studio, inicio">SISAL STUDIO</a>
       <button class="header__menu" type="button" aria-expanded="false" aria-controls="main-navigation">Menú</button>
       <nav class="header__nav" id="main-navigation" aria-label="Navegación principal">
         <a class="header__link" href="#galeria">Historias</a>
         <a class="header__link" href="#portafolio">Portafolio</a>
+        <a class="header__link" href="#galeria-3d">Experiencia 3D</a>
         <a class="header__link" href="#servicios">Servicios</a>
         <a class="header__link" href="#calculadora-sol">Calculadora</a>
         <a class="header__link" href="#contacto">Contacto</a>
@@ -64,18 +66,18 @@
     <main>
       <section class="hero" id="inicio" aria-labelledby="hero-title">
         <picture class="hero__media">
-          <source type="image/webp" srcset="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&fm=webp&w=1200&q=80 1200w, https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&fm=webp&w=2000&q=85 2000w">
-          <img class="hero__image" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&fm=jpg&w=2000&q=85" alt="Pareja celebrando su boda en un jardín" width="2000" height="1333" fetchpriority="high">
+          <img class="hero__image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'%3E%3Crect width='100%25' height='100%25' fill='%234a5346'/%3E%3C/svg%3E" alt="Pareja celebrando su boda en Yucatán" width="1600" height="1000" fetchpriority="high">
         </picture>
         <div class="hero__veil" aria-hidden="true"></div>
         <div class="hero__content">
           <p class="hero__eyebrow">Fotografía Fine Art · México</p>
           <h1 class="hero__title" id="hero-title">Inmortalizando la luz y el amor en el Mayab</h1>
           <p class="hero__subtitle">Fotografía documental y de bodas en Yucatán y Riviera Maya</p>
-          <a class="button button--light" href="#contacto">Consultar fechas</a>
+          <a class="button button--light" href="/contacto/">Consultar fechas</a>
         </div>
       </section>
 
+      <template id="legacy-home-sections">
       <section class="gallery section" id="galeria" aria-labelledby="gallery-title">
         <header class="section__heading">
           <p class="section__eyebrow">Historias recientes</p>
@@ -191,6 +193,29 @@
         <p class="portfolio__hint" aria-hidden="true">Desliza para explorar <span>→</span></p>
       </section>
 
+      <section class="webgl-gallery" id="galeria-3d" aria-labelledby="webgl-gallery-title">
+        <canvas class="webgl-gallery__canvas" id="canvas-3d" aria-label="Galería tridimensional interactiva de bodas"></canvas>
+        <header class="webgl-gallery__heading">
+          <p class="webgl-gallery__eyebrow">Una experiencia inmersiva</p>
+          <h2 class="webgl-gallery__title" id="webgl-gallery-title">Túnel de Recuerdos 3D</h2>
+        </header>
+        <p class="webgl-gallery__status" data-webgl-status aria-live="polite">La experiencia se cargará al entrar en esta sección.</p>
+
+        <aside class="webgl-gallery__panel" data-webgl-panel aria-live="polite">
+          <p class="webgl-gallery__panel-label">Historia seleccionada</p>
+          <h3 class="webgl-gallery__panel-title" data-webgl-title></h3>
+          <p class="webgl-gallery__panel-location" data-webgl-location></p>
+          <a class="webgl-gallery__panel-link" href="#contacto">Ver cobertura</a>
+        </aside>
+
+        <div class="webgl-gallery__controls" aria-label="Controles de la galería 3D">
+          <button type="button" data-webgl-zoom-in aria-label="Acercar la cámara">Zoom +</button>
+          <button type="button" data-webgl-zoom-out aria-label="Alejar la cámara">Zoom −</button>
+          <button type="button" data-webgl-rotate>Rotar</button>
+          <button type="button" data-webgl-reset>Reiniciar</button>
+        </div>
+      </section>
+
       <section class="services section" id="servicios" aria-labelledby="services-title">
         <header class="section__heading section__heading--centered">
           <p class="section__eyebrow">La experiencia</p>
@@ -253,6 +278,7 @@
         <h2 class="contact__title" id="contact-title">Hagamos algo que se sienta para siempre.</h2>
         <a class="button button--outline" href="https://wa.me/529987449856?text=Hola%20Sisal%20Studio%2C%20me%20gustar%C3%ADa%20consultar%20disponibilidad%20para%20una%20sesi%C3%B3n." target="_blank" rel="noopener noreferrer" aria-label="Consultar disponibilidad con Sisal Studio por WhatsApp">Consultar por WhatsApp</a>
       </section>
+      </template>
     </main>
 
     <footer class="footer">
@@ -260,6 +286,7 @@
       <p>© <span data-current-year></span> Todos los derechos reservados.</p>
     </footer>
 
-    <script type="module" src="/src/main.js"></script>
+    <div data-site-footer></div>
+    <script type="module" src="/src/scripts/pages/home.js"></script>
   </body>
 </html>

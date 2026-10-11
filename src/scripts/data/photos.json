@@ -1,0 +1,74 @@
+[
+  {
+    "src": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&fm=webp&w=640&q=70",
+    "alt": "Ceremonia íntima al aire libre",
+    "title": "Ana & Diego",
+    "location": "Hacienda Sac Chich, Yucatán"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&fm=webp&w=640&q=70",
+    "alt": "Pareja caminando después de su ceremonia",
+    "title": "Mariana & Pablo",
+    "location": "Mérida, Yucatán"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&fm=webp&w=640&q=70",
+    "alt": "Retrato de una pareja de recién casados",
+    "title": "Sofía & Andrés",
+    "location": "Riviera Maya"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&fm=webp&w=640&q=70",
+    "alt": "Detalle de manos y anillos",
+    "title": "Renata & Carlos",
+    "location": "Tulum, Quintana Roo"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&fm=webp&w=640&q=70",
+    "alt": "Cena de boda iluminada con velas",
+    "title": "Elena & Mateo",
+    "location": "Hacienda Tekik de Regil"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&fm=webp&w=640&q=70",
+    "alt": "Novia en un momento tranquilo",
+    "title": "Lucía & Fernando",
+    "location": "Cancún, Quintana Roo"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&fm=webp&w=640&q=70&sat=-20",
+    "alt": "Retrato editorial de boda",
+    "title": "Isabel & Emilio",
+    "location": "Hacienda Yucatán"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&fm=webp&w=640&q=70",
+    "alt": "Celebración de una pareja frente al mar",
+    "title": "Camila & Javier",
+    "location": "Playa del Carmen"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&fm=webp&w=640&q=70&sat=-35",
+    "alt": "Retrato documental de recién casados",
+    "title": "Paulina & Marco",
+    "location": "Valladolid, Yucatán"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&fm=webp&w=640&q=70&sat=-25",
+    "alt": "Invitados durante una ceremonia",
+    "title": "Clara & Nicolás",
+    "location": "Tulum, Quintana Roo"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&fm=webp&w=640&q=70&sat=-30",
+    "alt": "Pareja entre vegetación tropical",
+    "title": "Teresa & Luis",
+    "location": "Puerto Morelos"
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&fm=webp&w=640&q=70&sat=-15",
+    "alt": "Detalles de una recepción de boda",
+    "title": "Valeria & Tomás",
+    "location": "Mérida, Yucatán"
+  }
+]

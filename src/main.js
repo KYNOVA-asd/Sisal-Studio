@@ -1,6 +1,7 @@
 import './styles/main.css';
 import './styles/_calculator.css';
 import { initGoldenHourCalculator } from './scripts/features/goldenHourCalc.js';
+import { initGallery3D } from './scripts/features/gallery3D.js';
 
 const menuButton = document.querySelector('.header__menu');
 const navigation = document.querySelector('.header__nav');
@@ -35,6 +36,7 @@ const yearElement = document.querySelector('[data-current-year]');
 if (yearElement) yearElement.textContent = new Date().getFullYear();
 
 initGoldenHourCalculator();
+initGallery3D();
 
 const portfolioFeed = document.querySelector('[data-portfolio-feed]');
 const portfolioPrevious = document.querySelector('[data-portfolio-previous]');
