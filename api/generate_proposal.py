@@ -40,6 +40,7 @@ def notify_telegram(data):
         f"ID: {data['client_id']}",
         f"Cliente: {data['cliente_nombre']}",
         f"Fecha: {data['fecha_boda']}",
+        f"Hora estimada: {data['hora_evento']}",
         f"Venue: {data['venue']}",
         f"Paquete: {PACKAGES[data['paquete_id']]['name']}",
         f"WhatsApp: {data['whatsapp']}",
@@ -80,7 +81,7 @@ def create_pdf(data):
     pdf.ln(5)
     pdf.set_font("Helvetica", "", 10)
     pdf.set_text_color(74, 83, 70)
-    pdf.cell(0, 7, f'{data["fecha_boda"]}  |  {data["venue"]}')
+    pdf.cell(0, 7, f'{data["fecha_boda"]}  |  {data["hora_evento"]}  |  {data["venue"]}')
     pdf.ln(7)
     pdf.set_font("Helvetica", "B", 8)
     pdf.cell(0, 6, "REFERENCIA: " + data["client_id"])
@@ -144,10 +145,10 @@ class handler(BaseHTTPRequestHandler):
                 raise ValueError("La solicitud fue rechazada.")
             if not verify_demo_captcha(data.get("captcha_challenge"), data.get("captcha_signature"), data.get("captcha_answer")):
                 raise ValueError("La verificación humana no es válida o expiró. Recarga e inténtalo nuevamente.")
-            required = ["cliente_nombre", "fecha_boda", "venue", "paquete_id", "email", "whatsapp"]
+            required = ["cliente_nombre", "fecha_boda", "hora_evento", "venue", "paquete_id", "email", "whatsapp"]
             if any(not str(data.get(field, "")).strip() for field in required):
                 raise ValueError("Todos los campos son obligatorios.")
-            limits = {"cliente_nombre": 100, "fecha_boda": 10, "venue": 140, "email": 160, "whatsapp": 32, "paquete_id": 24}
+            limits = {"cliente_nombre": 100, "fecha_boda": 10, "hora_evento": 5, "venue": 140, "email": 160, "whatsapp": 32, "paquete_id": 24}
             if any(len(str(data.get(field, ""))) > maximum for field, maximum in limits.items()):
                 raise ValueError("Uno de los campos supera la longitud permitida.")
             if data["paquete_id"] not in PACKAGES:

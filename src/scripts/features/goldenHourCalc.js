@@ -183,6 +183,7 @@ export const initGoldenHourCalculator = () => {
 
       renderResult(result, data);
       sessionStorage.setItem('sisalGoldenHour', JSON.stringify(data));
+      document.dispatchEvent(new CustomEvent('sisal:golden-hour-ready', { detail: data }));
       status.textContent = 'Tu timeline está listo.';
     } catch (error) {
       status.textContent = error.message || 'Ocurrió un error. Inténtalo nuevamente.';

@@ -15,6 +15,7 @@ export const downloadDemoProposalPdf = (data) => {
   const lines = [
     ['SISAL STUDIO', 22], ['PROPUESTA FINE ART DE DEMOSTRACION', 13], [`Referencia: ${clientId}`, 9], [`Generado el: ${generatedAt} (Cancun)`, 9], ['', 10],
     [`Cliente: ${data.cliente_nombre || ''}`, 11], [`Fecha de boda: ${data.fecha_boda || ''}`, 11],
+    [`Hora estimada de ceremonia: ${data.hora_evento || ''}`, 11],
     [`Locacion: ${data.venue || ''}`, 11], [`Paquete: ${packages[data.paquete_id] || data.paquete_id || ''}`, 11],
     [`Email: ${data.email || ''}`, 11], [`WhatsApp: ${data.whatsapp || ''}`, 11], ['', 10],
     [`Puesta de sol: ${data.sunset || 'Calcula la luz para incluirla'}`, 10],
