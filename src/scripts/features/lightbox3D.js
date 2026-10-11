@@ -73,6 +73,7 @@ export const initLightbox3D = async () => {
     let dragOffset = new THREE.Vector3();
     let animationFrame = 0;
     let active = true;
+    let autoMode = false;
     let destroyed = false;
 
     const makeCard = (source, index) => {
@@ -232,11 +233,24 @@ export const initLightbox3D = async () => {
       });
     };
 
+    const onAutoMode = (event) => {
+      autoMode = Boolean(event.detail?.enabled);
+      if (!autoMode) {
+        cameraTarget.copy(cameraHome);
+        lookTarget.set(0, 0, 0);
+      }
+    };
+
     const clock = new THREE.Clock();
     const animate = () => {
       if (destroyed || !active) return;
       animationFrame = requestAnimationFrame(animate);
       const delta = Math.min(clock.getDelta(), 0.033);
+      if (autoMode && !selectedCard && !draggedCard) {
+        const time = performance.now() * 0.00022;
+        cameraTarget.set(Math.sin(time) * 2.1, 9.2 + Math.sin(time * 1.7) * .45, 10.2 + Math.cos(time) * 1.2);
+        lookTarget.set(Math.sin(time * .7) * 1.2, 0, Math.cos(time * .55) * .8);
+      }
       cards.forEach((card) => {
         if (card.userData.dragging) return;
         card.position.addScaledVector(card.userData.velocity, delta);
@@ -275,6 +289,7 @@ export const initLightbox3D = async () => {
     canvas.addEventListener('pointerup', onPointerUp);
     canvas.addEventListener('pointercancel', onPointerUp);
     resetButton?.addEventListener('click', resetTable);
+    section.addEventListener('sisal:auto-mode', onAutoMode);
 
     cleanup = () => {
       if (destroyed) return;
@@ -287,6 +302,7 @@ export const initLightbox3D = async () => {
       canvas.removeEventListener('pointerup', onPointerUp);
       canvas.removeEventListener('pointercancel', onPointerUp);
       resetButton?.removeEventListener('click', resetTable);
+      section.removeEventListener('sisal:auto-mode', onAutoMode);
       scene.traverse((object) => {
         object.geometry?.dispose();
         const materials = Array.isArray(object.material) ? object.material : [object.material];

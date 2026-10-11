@@ -1,1 +1,1 @@
-import '../../styles/tokens.css';import '../../styles/gallery3d.css';import '../../styles/helix.css';import {initHelixGallery} from '../features/helixGalleryV2.js';initHelixGallery();
+import '../../styles/tokens.css';import '../../styles/gallery3d.css';import '../../styles/helix.css';import '../../styles/auto-experience.css';import {initHelixGallery} from '../features/helixGalleryV2.js';import {initAutoExperience} from '../../components/AutoExperience.js';initHelixGallery();initAutoExperience({target:document.querySelector('#helix-container'),type:'helix'});

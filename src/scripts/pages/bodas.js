@@ -2,6 +2,8 @@ import '../../styles/global.css'; import '../../styles/pages.css'; import { init
 import { getImagesByKeywords } from '../../data/localImages.js';
 import { initGallery3D } from '../features/gallery3D.js';
 import '../../styles/gallery3d.css';
+import '../../styles/auto-experience.css';
+import { initAutoExperience } from '../../components/AutoExperience.js';
 initGlobalLayout();
 const weddingImages=getImagesByKeywords(['boda','wedding','pareja','novia','novio','elopement'],8);
 const hero=document.querySelector('.page-hero--weddings');if(hero&&weddingImages[0])hero.style.setProperty('--page-hero-image',`url("${weddingImages[0]}")`);
@@ -29,6 +31,7 @@ gallery3D.innerHTML = `
   </div>`;
 document.querySelector('.page-cta')?.before(gallery3D);
 initGallery3D();
+initAutoExperience({ target: gallery3D, type: 'tunnel' });
 if (window.location.hash === '#galeria-3d') {
   requestAnimationFrame(() => gallery3D.scrollIntoView({ behavior: 'smooth', block: 'start' }));
 }

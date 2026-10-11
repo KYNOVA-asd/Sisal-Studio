@@ -1,10 +1,13 @@
 import { renderHeader } from '../components/Header.js';
 import { renderFooter } from '../components/Footer.js';
 import { createGallery3DLoader } from '../components/Gallery3D.js';
+import { initAutoExperience } from '../components/AutoExperience.js';
+import '../styles/auto-experience.css';
 
 export const initGlobalLayout = () => {
   renderHeader(); renderFooter();
   if (document.querySelector('.liquid-page')) {
+    initAutoExperience({ target: document.querySelector('.liquid-page'), type: 'liquid' });
     const loader = createGallery3DLoader(document.querySelector('.liquid-page'));
     let progress = 8;
     const timer = window.setInterval(() => {

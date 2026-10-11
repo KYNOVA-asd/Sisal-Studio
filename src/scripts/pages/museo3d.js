@@ -1,1 +1,1 @@
-import '../../styles/tokens.css';import '../../styles/gallery3d.css';import '../../styles/museum.css';import {initMuseum3D} from '../features/museum3D.js';initMuseum3D();
+import '../../styles/tokens.css';import '../../styles/gallery3d.css';import '../../styles/museum.css';import '../../styles/auto-experience.css';import {initMuseum3D} from '../features/museum3D.js';import {initAutoExperience} from '../../components/AutoExperience.js';initMuseum3D();initAutoExperience({target:document.querySelector('#museum-container'),type:'museum'});
