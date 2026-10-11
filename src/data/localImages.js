@@ -1,14 +1,21 @@
 const imageModules = import.meta.glob([
-  '/src/img/**/*.{avif,gif,jfif,jpeg,jpg,png,webp}',
-  '/src/img/**/*.{AVIF,GIF,JFIF,JPEG,JPG,PNG,WEBP}',
+  '/src/img/**/*.webp',
+  '/src/img/**/*.WEBP',
 ], {
   eager: true,
   query: '?url',
   import: 'default',
 });
 
-const discoveredImages = Object.entries(imageModules)
-  .map(([path, url]) => ({ path: path.toLowerCase(), url }))
+const discoveredEntries = Object.entries(imageModules)
+  .map(([path, url]) => ({ path: path.toLowerCase(), url }));
+const webpStems = new Set(
+  discoveredEntries
+    .filter(({ path }) => path.endsWith('.webp'))
+    .map(({ path }) => path.replace(/\.webp$/, '')),
+);
+const discoveredImages = discoveredEntries
+  .filter(({ path }) => path.endsWith('.webp') || !webpStems.has(path.replace(/\.(avif|gif|jfif|jpeg|jpg|png)$/, '')))
   .sort((a, b) => a.path.localeCompare(b.path));
 
 const demoImages = [

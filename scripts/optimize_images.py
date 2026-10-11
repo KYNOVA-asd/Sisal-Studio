@@ -11,12 +11,18 @@ Reemplazar originales después de crear cada WebP correctamente:
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageOps
 
 
 SUPPORTED_EXTENSIONS = {".png", ".jpg", ".jpeg"}
+
+# Evita que nombres con emojis o caracteres combinados detengan el proceso en
+# consolas de Windows configuradas con una página de códigos heredada.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
 
 
 def human_size(size: int) -> str:
