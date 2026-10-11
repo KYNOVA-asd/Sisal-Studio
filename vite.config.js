@@ -17,6 +17,8 @@ export default defineConfig({
         galeriaEditorial: resolve(import.meta.dirname, 'galeria-editorial/index.html'),
         espiral3d: resolve(import.meta.dirname, 'espiral-3d/index.html'),
         museo3d: resolve(import.meta.dirname, 'museo-3d/index.html'),
+        experiencias: resolve(import.meta.dirname, 'experiencias/index.html'),
+        portafolio: resolve(import.meta.dirname, 'portafolio/index.html'),
       },
     },
   },

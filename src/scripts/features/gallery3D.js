@@ -2,7 +2,6 @@ import { getImagesByKeywords } from '../../data/localImages.js';
 import { createGallery3DLoader } from '../../components/Gallery3D.js';
 
 const MAX_PHOTOS = 24;
-const THREE_CDN = 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 
 export const initGallery3D = () => {
   const section = document.querySelector('#galeria-3d');
@@ -34,7 +33,7 @@ export const initGallery3D = () => {
     status.textContent = 'Preparando los recuerdos…';
 
     try {
-      const THREE = await import(/* @vite-ignore */ THREE_CDN);
+    const THREE = await import('three');
       const photos = getImagesByKeywords(
         ['boda', 'wedding', 'pareja', 'novia', 'novio', 'elopement'],
         MAX_PHOTOS,

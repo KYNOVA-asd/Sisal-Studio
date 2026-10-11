@@ -1,7 +1,6 @@
 import { createGallery3DLoader } from '../../components/Gallery3D.js';
 import { getImagesByKeywords } from '../../data/localImages.js';
 
-const THREE_CDN = 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
 const CARD_COUNT = 12;
 
 export const initLightbox3D = async () => {
@@ -16,7 +15,7 @@ export const initLightbox3D = async () => {
   let cleanup = () => {};
 
   try {
-    const THREE = await import(/* @vite-ignore */ THREE_CDN);
+    const THREE = await import('three');
     const imageSources = getImagesByKeywords(
       ['boda', 'wedding', 'pareja', 'novia', 'evento', 'fineart', 'editorial'],
       CARD_COUNT,

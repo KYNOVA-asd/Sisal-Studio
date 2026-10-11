@@ -1,7 +1,8 @@
 const links = [
   ['/', 'Inicio'], ['/bodas/', 'Bodas'], ['/eventos/', 'XV Años & Eventos'],
-  ['/locaciones/', 'Locaciones'], ['/cotizar/', 'Cotizar'],
+  ['/locaciones/', 'Locaciones'], ['/portafolio/', 'Portafolio'], ['/cotizar/', 'Cotizar'],
   ['/blog/', 'Blog'],
+  ['/experiencias/', 'Experiencias 3D'],
   ['/contacto/', 'Contacto'],
 ];
 

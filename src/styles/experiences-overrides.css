@@ -1,0 +1,12 @@
+.experience-directory__grid .experience-directory__featured {
+  grid-column: 1 / -1;
+  min-height: 320px;
+  color: #faf9f6;
+  background: var(--color-charcoal);
+}
+
+.experience-directory__featured span { color: var(--color-henequen); }
+
+@media (max-width: 850px) {
+  .experience-directory__grid .experience-directory__featured { min-height: 280px; }
+}

@@ -1,8 +1,21 @@
 import { renderHeader } from '../components/Header.js';
 import { renderFooter } from '../components/Footer.js';
+import { createGallery3DLoader } from '../components/Gallery3D.js';
 
 export const initGlobalLayout = () => {
   renderHeader(); renderFooter();
+  if (document.querySelector('.liquid-page')) {
+    const loader = createGallery3DLoader(document.querySelector('.liquid-page'));
+    let progress = 8;
+    const timer = window.setInterval(() => {
+      progress = Math.min(92, progress + 7);
+      loader.update(progress);
+    }, 90);
+    window.addEventListener('load', () => {
+      window.clearInterval(timer);
+      loader.complete();
+    }, { once: true });
+  }
   const button = document.querySelector('.site-header__menu');
   const nav = document.querySelector('.site-nav');
   button?.addEventListener('click', () => {

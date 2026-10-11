@@ -29,3 +29,6 @@ gallery3D.innerHTML = `
   </div>`;
 document.querySelector('.page-cta')?.before(gallery3D);
 initGallery3D();
+if (window.location.hash === '#galeria-3d') {
+  requestAnimationFrame(() => gallery3D.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+}
