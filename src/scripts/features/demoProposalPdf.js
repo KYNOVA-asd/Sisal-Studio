@@ -17,6 +17,8 @@ export const downloadDemoProposalPdf = (data) => {
     [`Cliente: ${data.cliente_nombre || ''}`, 11], [`Fecha de boda: ${data.fecha_boda || ''}`, 11],
     [`Locacion: ${data.venue || ''}`, 11], [`Paquete: ${packages[data.paquete_id] || data.paquete_id || ''}`, 11],
     [`Email: ${data.email || ''}`, 11], [`WhatsApp: ${data.whatsapp || ''}`, 11], ['', 10],
+    [`Puesta de sol: ${data.sunset || 'Calcula la luz para incluirla'}`, 10],
+    [`Ceremonia recomendada: ${data.recommended_ceremony || 'Por definir'}`, 10], ['', 8],
     ['Documento informativo sujeto a disponibilidad.', 9],
     ['Para reservar se requiere confirmacion, contrato y anticipo.', 9],
     ['Contacto: wa.me/529987449856', 9],

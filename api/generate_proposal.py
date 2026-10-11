@@ -9,6 +9,7 @@ from io import BytesIO
 from http.server import BaseHTTPRequestHandler
 from fpdf import FPDF
 from zoneinfo import ZoneInfo
+from urllib import parse, request
 
 
 def verify_demo_captcha(challenge, signature, answer):
@@ -27,6 +28,31 @@ def generate_client_id(name):
 
 def generated_at():
     return datetime.now(ZoneInfo("America/Cancun")).strftime("%d/%m/%Y %I:%M %p")
+
+
+def notify_telegram(data):
+    token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    if not token or not chat_id:
+        return False
+    message = "\n".join([
+        "Nueva solicitud de cotizacion - Sisal Studio",
+        f"ID: {data['client_id']}",
+        f"Cliente: {data['cliente_nombre']}",
+        f"Fecha: {data['fecha_boda']}",
+        f"Venue: {data['venue']}",
+        f"Paquete: {PACKAGES[data['paquete_id']]['name']}",
+        f"WhatsApp: {data['whatsapp']}",
+        f"Email: {data['email']}",
+        f"Puesta de sol: {data.get('sunset') or 'No calculada'}",
+        f"Ceremonia sugerida: {data.get('recommended_ceremony') or 'No calculada'}",
+        f"Generada: {data['generated_at']} Cancun",
+    ])
+    body = parse.urlencode({"chat_id": chat_id, "text": message}).encode("utf-8")
+    with request.urlopen(request.Request(
+        f"https://api.telegram.org/bot{token}/sendMessage", data=body, method="POST"
+    ), timeout=6) as response:
+        return response.status == 200
 
 PACKAGES = {
     "esencial": {"name": "Colección Esencial", "hours": "6 horas", "price": "$38,000 MXN", "items": ["Cobertura documental", "Galería digital privada", "300+ fotografías editadas"]},
@@ -61,6 +87,13 @@ def create_pdf(data):
     pdf.ln(6)
     pdf.set_font("Helvetica", "", 8)
     pdf.cell(0, 6, "GENERADO EL: " + data["generated_at"] + " (CANCUN)")
+    if data.get("sunset"):
+        pdf.ln(10)
+        pdf.set_font("Helvetica", "B", 9)
+        pdf.cell(0, 6, "GUIA DE LUZ PARA LA FECHA")
+        pdf.ln(7)
+        pdf.set_font("Helvetica", "", 9)
+        pdf.cell(0, 6, f'Puesta de sol: {data["sunset"]}  |  Ceremonia sugerida: {data.get("recommended_ceremony", "Por definir")}')
     pdf.ln(24)
     pdf.set_draw_color(212, 197, 185)
     pdf.line(18, pdf.get_y(), 192, pdf.get_y())
@@ -122,10 +155,16 @@ class handler(BaseHTTPRequestHandler):
             data["client_id"] = generate_client_id(data["cliente_nombre"])
             data["generated_at"] = generated_at()
             content = create_pdf(data)
+            telegram_sent = False
+            try:
+                telegram_sent = notify_telegram(data)
+            except Exception:
+                telegram_sent = False
             filename = f'propuesta-{data["client_id"].lower()}.pdf'
             self.send_response(200); self.send_header("Content-Type", "application/pdf")
             self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
             self.send_header("X-Sisal-Client-Id", data["client_id"])
+            self.send_header("X-Sisal-Telegram", "sent" if telegram_sent else "not-sent")
             self.send_header("Content-Length", str(len(content))); self._cors(); self.end_headers(); self.wfile.write(content)
         except (ValueError, KeyError, json.JSONDecodeError) as error:
             payload = json.dumps({"error": str(error)}).encode()
