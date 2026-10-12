@@ -30,7 +30,7 @@ def generated_at():
     return datetime.now(ZoneInfo("America/Cancun")).strftime("%d/%m/%Y %I:%M %p")
 
 
-def notify_telegram(data):
+def notify_telegram(data, pdf_content, filename):
     token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
     chat_id = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
     if not token or not chat_id:
@@ -53,7 +53,37 @@ def notify_telegram(data):
     with request.urlopen(request.Request(
         f"https://api.telegram.org/bot{token}/sendMessage", data=body, method="POST"
     ), timeout=6) as response:
-        return response.status == 200
+        message_sent = response.status == 200
+
+    boundary = "----SisalStudioBoundary" + secrets.token_hex(8)
+    parts = []
+
+    def add_field(name, value):
+        parts.append(f"--{boundary}\r\n".encode())
+        parts.append(f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode())
+        parts.append(str(value).encode("utf-8"))
+        parts.append(b"\r\n")
+
+    add_field("chat_id", chat_id)
+    add_field("caption", f"PDF de cotizacion {data['client_id']} - {data['cliente_nombre']}")
+    parts.append(f"--{boundary}\r\n".encode())
+    parts.append(
+        f'Content-Disposition: form-data; name="document"; filename="{filename}"\r\n'
+        f"Content-Type: application/pdf\r\n\r\n".encode()
+    )
+    parts.append(pdf_content)
+    parts.append(b"\r\n")
+    parts.append(f"--{boundary}--\r\n".encode())
+    document_body = b"".join(parts)
+    document_request = request.Request(
+        f"https://api.telegram.org/bot{token}/sendDocument",
+        data=document_body,
+        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+        method="POST",
+    )
+    with request.urlopen(document_request, timeout=10) as response:
+        document_sent = response.status == 200
+    return message_sent and document_sent
 
 PACKAGES = {
     "esencial": {"name": "Colección Esencial", "hours": "6 horas", "price": "$38,000 MXN", "items": ["Cobertura documental", "Galería digital privada", "300+ fotografías editadas"]},
@@ -156,12 +186,12 @@ class handler(BaseHTTPRequestHandler):
             data["client_id"] = generate_client_id(data["cliente_nombre"])
             data["generated_at"] = generated_at()
             content = create_pdf(data)
+            filename = f'propuesta-{data["client_id"].lower()}.pdf'
             telegram_sent = False
             try:
-                telegram_sent = notify_telegram(data)
+                telegram_sent = notify_telegram(data, content, filename)
             except Exception:
                 telegram_sent = False
-            filename = f'propuesta-{data["client_id"].lower()}.pdf'
             self.send_response(200); self.send_header("Content-Type", "application/pdf")
             self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
             self.send_header("X-Sisal-Client-Id", data["client_id"])
